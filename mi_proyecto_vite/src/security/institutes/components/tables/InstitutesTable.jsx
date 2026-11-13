@@ -131,7 +131,7 @@ const InstitutesColumns = [
   },
 ];
 
-const InstitutesTable = ({ refetchData }) => {
+const InstitutesTable = ({ refetchData, selectedId, onSelect }) => {
   const InstitutesData = useSelector((state) => state.institutesReducer.institutesDataArr);
   const [AddInstituteShowModal, setAddInstituteShowModal] = useState(false);
 
@@ -154,7 +154,7 @@ const InstitutesTable = ({ refetchData }) => {
                 />
               </Stack>
               <Typography sx={{ fontSize: "0.78rem", color: "#94a3b8" }}>
-                Directorio de instituciones registradas
+                Directorio de instituciones registradas · Haz clic en un instituto para ver sus negocios
               </Typography>
             </Stack>
             <Tooltip title="Agregar instituto">
@@ -173,6 +173,12 @@ const InstitutesTable = ({ refetchData }) => {
         <MaterialReactTable
           columns={InstitutesColumns}
           data={InstitutesData}
+          getRowId={(row) => row.IdInstitutoOK}
+          muiTableBodyRowProps={({ row }) => ({
+            onClick: () => onSelect && onSelect(row.original),
+            selected: row.id === selectedId,
+            sx: { cursor: "pointer" },
+          })}
           enableColumnActions={false}
           enableDensityToggle={false}
           enableFullScreenToggle={false}

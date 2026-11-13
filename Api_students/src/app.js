@@ -47,4 +47,10 @@ app.get('/DrFIC', (req, res) => {
 // 🔥 IMPORTANTE (esto es lo nuevo del 6.4)
 routeAPI(app);
 
+// Errores: responde JSON con el código que corresponde (404, 409, 400...)
+app.use((err, req, res, next) => {
+    const estado = err.isBoom ? err.output.statusCode : err.name === 'ValidationError' ? 400 : 500;
+    res.status(estado).json({ success: false, message: err.message });
+});
+
 export default app;

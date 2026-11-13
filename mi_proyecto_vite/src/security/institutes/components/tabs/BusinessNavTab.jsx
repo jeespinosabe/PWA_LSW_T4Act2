@@ -29,8 +29,8 @@ const BusinessNavTab = ({ currentRowInBusinessTab, setCurrentNameTabInBusinessTa
                 aria-label="icon tabs example"
                 textColor="primary"
             >
-                {BusinessTabs.map((tab) => (
-                    <Tab key={tab} label={tab} disabled={currentRowInBusinessTab === null} />
+                {BusinessTabs.map((tab, index) => (
+                    <Tab key={tab} label={tab} disabled={index > 0 && currentRowInBusinessTab === null} />
                 ))}
             </Tabs>
         </Box>

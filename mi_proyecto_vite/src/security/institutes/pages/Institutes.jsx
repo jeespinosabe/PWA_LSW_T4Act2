@@ -10,6 +10,9 @@ const Institutes = () => {
     const [currentRowInInstitutesTab, setCurrentRowInInstitutesTab] = useState(0);
     const [currentTabInPrincipalTab, setCurrentTabInPrincipalTab] = useState("INSTITUTOS");
 
+    // Instituto elegido en la tabla; sus negocios se ven en la pestaña "Negocios"
+    const [selectedInstitute, setSelectedInstitute] = useState(null);
+
     // 2. CREA EL ESTADO PARA LA MODAL
     const [AddInstituteShowModal, setAddInstituteShowModal] = useState(false);
 
@@ -22,10 +25,13 @@ const Institutes = () => {
 
             {/* 3. PÁSALE EL ESTADO A INSTITUTESTAB */}
             {currentTabInPrincipalTab == "INSTITUTOS" && (
-                <InstitutesTab setAddInstituteShowModal={setAddInstituteShowModal} />
+                <InstitutesTab
+                    selectedId={selectedInstitute?.IdInstitutoOK}
+                    onSelect={setSelectedInstitute}
+                />
             )}
-            
-            {currentTabInPrincipalTab == "NEGOCIOS" && <BusinessTab />}
+
+            {currentTabInPrincipalTab == "NEGOCIOS" && <BusinessTab institute={selectedInstitute} />}
 
             {/* 4. COLOCA LA MODAL AL FINAL */}
             <AddInstituteModal 

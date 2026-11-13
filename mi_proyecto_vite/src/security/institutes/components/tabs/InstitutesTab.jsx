@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { GET_DATA_START } from "../../../redux/thunks";
 import InstitutesTable from "../tables/InstitutesTable";
 
-export default function InstitutesTab() {
+export default function InstitutesTab({ selectedId, onSelect }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -13,7 +13,11 @@ export default function InstitutesTab() {
 
   return (
     <Box sx={{ mt: 2 }}>
-      <InstitutesTable refetchData={() => dispatch(GET_DATA_START())} />
+      <InstitutesTable
+        refetchData={() => dispatch(GET_DATA_START())}
+        selectedId={selectedId}
+        onSelect={onSelect}
+      />
     </Box>
   );
 }
