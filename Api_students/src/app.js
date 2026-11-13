@@ -7,7 +7,7 @@ import routeAPI from './api/v1/routes/index.js';
 import config from './config/config.js';
 
 //  Establece la conexion a la BD
-import './config/database.config.js'; // Esto ejecuta el archivo sin importar variables
+import { connectDB } from './config/database.config.js';
 const app = express();
 
 // FIC: Settings
@@ -18,6 +18,16 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// Espera la conexión a la BD antes de atender cada petición (necesario en Vercel)
+app.use(async (req, res, next) => {
+    try {
+        await connectDB();
+        next();
+    } catch (error) {
+        res.status(503).json({ message: 'No se pudo conectar a la base de datos' });
+    }
+});
 
 // FIC: Routes base
 const api = config.API_URL;
